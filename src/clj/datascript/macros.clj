@@ -1,4 +1,4 @@
-(ns datascript)
+(ns datascript.macros)
 
 (defmacro combine-cmp [& comps]
   (loop [comps (reverse comps)

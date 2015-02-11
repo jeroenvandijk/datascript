@@ -138,7 +138,7 @@
             (if (< i r1-l) i (- i r1-l))
             (aget (if (< i a1-l) a1 a2)
                   (if (< i a1-l) i (- i a1-l)))))
-    #js [r1 r2]))
+    #+cljs #js [r1 r2]))
 
 (defn ^boolean eq-arr [a1 a1-from a1-to a2 a2-from a2-to cmp]
   (let [len (- a1-to a1-from)]
@@ -173,6 +173,7 @@
   [min-len max-len arr]
   (let [chunk-len (half (+ max-len min-len))
         len       (alength arr)
+        ;; TODO what kind of java type should we use here?
         acc       #js []]
     (when (pos? len)
       (loop [pos 0]

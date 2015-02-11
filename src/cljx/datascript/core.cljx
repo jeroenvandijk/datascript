@@ -1,9 +1,11 @@
 (ns datascript.core
   (:require
     [datascript.btset :as btset]
-    [goog.array :as garray])
+    [goog.array :as garray]
+    #+clj [datascript.macros :refer [combine-cmp case-tree raise]])
+  #+cljs
   (:require-macros
-    [datascript :refer [combine-cmp case-tree raise]]))
+    [datascript.macros :refer [combine-cmp case-tree raise]]))
 
 (def ^:const tx0 0x20000000)
 

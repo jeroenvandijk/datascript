@@ -2,7 +2,7 @@
   (:require
    [datascript.core :as dc])
   (:require-macros
-    [datascript :refer [raise]]))
+    [datascript.macros :refer [raise]]))
 
 (defrecord PullSpec [wildcard? attrs])
 

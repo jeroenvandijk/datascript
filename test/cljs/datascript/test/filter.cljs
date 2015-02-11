@@ -1,10 +1,11 @@
 (ns datascript.test.filter
+  ;#+cljs
   (:require-macros
     [cemerick.cljs.test :refer [is are deftest testing]])
   (:require
+    ; #+clj [clojure.test :refer [is are deftest testing]]
     [datascript.core :as dc]
     [datascript :as d]
-    [cemerick.cljs.test :as t]
     [datascript.test.core :as tdc]))
 
 (deftest test-filter-db

@@ -3,20 +3,20 @@
   :license {:name "Eclipse"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :url "https://github.com/tonsky/datascript"
-  
+
   :dependencies [
     [org.clojure/clojure "1.6.0" :scope "provided"]
     [org.clojure/clojurescript "0.0-2727" :scope "provided"]
   ]
-  
+
   :global-vars {
     *warn-on-reflection* true
     *unchecked-math* :warn-on-boxed
   }
-  
+
   :jvm-opts ["-Xmx2g"]
-  
-  :cljsbuild { 
+
+  :cljsbuild {
     :builds [
       { :id "release"
         :source-paths ["src"]
@@ -26,21 +26,29 @@
           :optimizations :advanced
           :pretty-print  false
           :elide-asserts true
-          :output-wrapper false 
+          :output-wrapper false
         }
         :notify-command ["release-js/wrap_bare.sh"]}
-  ]}
+      ]}
+
+  :source-paths ["src/clj"
+                 "target/generated/src/clj"]
+
+  :test-paths ["test/clj"
+               "target/generated/test/clj"]
 
   :profiles {
     :dev {
       :plugins [
         [lein-cljsbuild "1.0.3"]
+        [com.keminglabs/cljx "0.5.0"]
         [com.cemerick/clojurescript.test "0.3.1"]
       ]
-      :cljsbuild { 
+      :cljsbuild {
         :builds [
           { :id "dev"
-            :source-paths ["src" "test"]
+           :source-paths ["src/cljs"  "target/generated/src/cljs"
+                          "test/cljs" "target/generated/test/cljs"]
             :compiler {
               :output-to     "web/datascript.js"
               :output-dir    "web/target-cljs"
@@ -48,7 +56,8 @@
               :source-map    true
             }}
           { :id "testable"
-            :source-paths ["src" "test"]
+           :source-paths ["src/cljs"  "target/generated/src/cljs"
+                          "test/cljs" "target/generated/test/cljs"]
             :compiler {
               :output-to     "web/datascript.testable.js"
               :optimizations :advanced
@@ -62,7 +71,22 @@
       }
     }
   }
-  
+
+  :cljx {:builds [{:source-paths ["src/cljx"]
+                   :output-path "target/generated/src/clj"
+                   :rules :clj}
+                  {:source-paths ["test/cljx"]
+                   :output-path "target/generated/test/clj"
+                   :rules :clj}
+
+                  {:source-paths ["src/cljx"]
+                   :output-path "target/generated/src/cljs"
+                   :rules :cljs}
+                  {:source-paths ["test/cljx"]
+                   :output-path "target/generated/test/cljs"
+                   :rules :cljs}
+                  ]}
+
   :clean-targets ^{:protect false} [
     "target"
     "web/target-cljs"

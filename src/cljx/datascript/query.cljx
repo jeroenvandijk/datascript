@@ -1,6 +1,7 @@
 (ns datascript.query
   (:require
-    [cljs.reader]
+    #+cljs [cljs.reader :as edn]
+    #+clj  [clojure.edn :as edn]
     [clojure.set :as set]
     [clojure.walk :as walk]
     [datascript.core :as dc]
@@ -125,8 +126,8 @@
   'zero? zero?, 'pos? pos?, 'neg? neg?, 'even? even?, 'odd? odd?, 'true? true?,
   'false? false?, 'nil? nil?, 'str str, 'identity identity, 'vector vector,
   '-differ? -differ?, 'get-else -get-else, 'get-some -get-some, 'missing? -missing?, 'ground identity})
- 
-(def built-in-aggregates 
+
+(def built-in-aggregates
  (letfn [(sum [coll] (reduce + 0 coll))
          (avg [coll] (/ (sum coll) (count coll)))
          (median
@@ -145,8 +146,8 @@
                                  :let [delta (- x mean)]]
                              (* delta delta)))]
              (/ sum (count coll))))
-         (stddev 
-           [coll] 
+         (stddev
+           [coll]
            (js/Math.sqrt (variance coll)))]
    {'avg      avg
     'median   median
@@ -218,7 +219,7 @@
         (Relation. {form 0} [#js [value]]))))
 
 (defn parse-rules [rules]
-  (let [rules (if (string? rules) (cljs.reader/read-string rules) rules)] ;; for datascript.js interop
+  (let [rules (if (string? rules) (edn/read-string rules) rules)] ;; for datascript.js interop
     (group-by ffirst rules)))
 
 (defn parse-in [context [in value]]

@@ -1,8 +1,10 @@
 (ns datascript.test.pull-api
+  #+cljs 
   (:require-macros
     [cemerick.cljs.test :refer [is are deftest testing]])
   (:require
-   [cemerick.cljs.test :as t]
+   #+clj  [clojure.test :as t]
+   #+cljs [cemerick.cljs.test :as t]
    [datascript :as d]))
 
 (def ^:private test-schema

@@ -2,7 +2,7 @@
   (:refer-clojure
     :exclude [distinct?])
   (:require-macros
-    [datascript :refer [raise]])
+    [datascript.macros :refer [raise]])
   (:require
     [clojure.set :as set]))
 
